@@ -26,7 +26,6 @@ export default function Card({ title, question, answer }) {
   }
 }
 
-
 const CardStyle = styled.section`
   background: white;
   padding: 20px;

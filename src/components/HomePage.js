@@ -1,10 +1,9 @@
 import React from 'react'
 import Card from './Card'
-import Page from './Page'
 
 export default function HomePage({ cards }) {
   return (
-    <Page>
+    <>
       <h1>Homepage</h1>
       {cards.map((card, index) => (
         <Card
@@ -14,6 +13,6 @@ export default function HomePage({ cards }) {
           answer={card.answer}
         />
       ))}
-    </Page>
+    </>
   )
 }

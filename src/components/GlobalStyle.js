@@ -1,4 +1,3 @@
-import React from 'react'
 import { createGlobalStyle } from 'styled-components/macro'
 
 
@@ -10,6 +9,10 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     background: #eee;
+  }
+
+  input, button, textarea {
+    font-size: 1.5em;
   }
 `
 

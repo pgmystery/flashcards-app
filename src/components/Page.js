@@ -7,7 +7,7 @@ export default function Page({ children }) {
     )
 }
 
-const PageStyled = styled.section`
+const PageStyled = styled.main`
   padding: 20px;
   display: grid;
   align-content: flex-start;

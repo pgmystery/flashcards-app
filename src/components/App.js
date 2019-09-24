@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
 
 import Navigation from './Navigation'
-import HomePage from './HomePage'
+import CardList from './CardList'
 import GlobalStyle from './GlobalStyle'
 import Page from './Page'
 import SettingsPage from './SettingsPage'
 
-import { getAllCards, postCard } from './services'
+import { getAllCards, postCard, patchCard } from './services'
 
 
 export default function App() {
@@ -16,24 +16,49 @@ export default function App() {
 
   useEffect(() => {
     getAllCards()
-      .then(cards => setCards(cards))
+      .then(setCards)
+      .catch(err => console.log("ERROR", err))
   }, [])
 
-  function handleSubmit(data) {
-    // postCard(data).then(newCard => setCards([...cards, newCard]))
-    setCards([...cards, data])
-    postCard(data)
+  function createCard(cardData) {
+    postCard(cardData)
+      .then(newCard => setCards([...cards, newCard]))
+      .catch(err => console.log("ERROR", err))
   }
 
   function renderPage() {
     const pages = {
-      0: <HomePage cards={cards} />,
-      1: <Page>Practice</Page>,
-      2: <Page>Bookmarks</Page>,
-      3: <SettingsPage onSubmit={handleSubmit} />,
+      0: <CardList
+          cards={cards}
+          title={'Home'}
+          toggleBookmarked={toggleBookmarked}
+        />,
+      1: <CardList
+          cards={cards.filter(card => card.doPractice)}
+          title={'Practice'}
+          toggleBookmarked={toggleBookmarked}
+        />,
+      2: <CardList
+          cards={cards.filter(card => card.isBookmarked)}
+          title={'Bookmark'}
+          toggleBookmarked={toggleBookmarked}
+        />,
+      3: <SettingsPage onSubmit={createCard} />,
     }
 
     return pages[activeIndex] || <Page>404</Page>
+  }
+
+  function toggleBookmarked(card) {
+    const index = cards.indexOf(card)
+    patchCard(card._id, {isBookmarked: !card.isBookmarked})
+      .then(changedCard => {
+        setCards([
+          ...cards.slice(0, index),
+          changedCard,
+          ...cards.slice(index + 1),
+        ])
+      })
   }
 
   return (
@@ -51,7 +76,6 @@ export default function App() {
     </>
   )
 }
-
 
 
 const AppStyle = styled.div`

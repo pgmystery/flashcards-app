@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import Navigation from './Navigation'
 import CardList from './CardList'
@@ -11,7 +12,6 @@ import { getAllCards, postCard, patchCard } from './services'
 
 
 export default function App() {
-  const [activeIndex, setActiveIndex] = useState(0)
   const [cards, setCards] = useState([])
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function App() {
       .catch(err => console.log("ERROR", err))
   }
 
-  function renderPage() {
+  function renderPage(index) {
     const pages = {
       0: <CardList
           cards={cards}
@@ -46,7 +46,8 @@ export default function App() {
       3: <SettingsPage onSubmit={createCard} />,
     }
 
-    return pages[activeIndex] || <Page>404</Page>
+    // return pages[activeIndex] || <Page>404</Page>
+    return pages[index] || <Page>404</Page>
   }
 
   function toggleBookmarked(card) {
@@ -63,16 +64,21 @@ export default function App() {
 
   return (
     <>
-    <GlobalStyle />
-    <AppStyle>
-      <Page>
-        {renderPage()}
-      </Page>
-      <Navigation
-        buttonTexts={['Home', 'Practice', 'Bookmarks', 'Settings']}
-        onClick={setActiveIndex}
-      />
-    </AppStyle>
+      <GlobalStyle />
+      <Router>
+      <AppStyle>
+        <Page>
+          <Route exact path="/" component={() => renderPage(0) } />
+          <Route exact path="/practice" component={() => renderPage(1) } />
+          <Route exact path="/bookmarks" component={() => renderPage(2) } />
+          <Route exact path="/settings" component={() => renderPage(3) } />
+        </Page>
+        <Navigation
+          rootText={'Home'}
+          buttonTexts={['Practice', 'Bookmarks', 'Settings']}
+        />
+      </AppStyle>
+    </ Router>
     </>
   )
 }

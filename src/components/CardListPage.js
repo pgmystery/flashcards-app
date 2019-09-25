@@ -1,7 +1,7 @@
 import React from 'react'
 import Card from './Card'
 
-export default function CardList({ cards, title, toggleBookmarked }) {
+export default function CardListPage({ cards, title, toggleBookmarked }) {
   return (
     <>
       <h1>{title}</h1>

@@ -2,22 +2,39 @@ import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 
 import BookmarkButton from './BookmarkButton'
+import PropTypes from 'prop-types'
 
-export default function Card({ title, question, answer, isBookmarked, toggleBookmarked }) {
+Card.propTypes = {
+  title: PropTypes.string.isRequired,
+  question: PropTypes.string.isRequired,
+  answer: PropTypes.string.isRequired,
+  isBookmarked: PropTypes.bool,
+  onBookmarkClicked: PropTypes.func,
+}
+
+Card.defaultProps = {
+  title: '(No title)',
+  question: '(No question)',
+  answer: '(No answer)',
+}
+
+export default function Card({ title, question, answer, isBookmarked, onBookmarkClicked }) {
   const [isAnswerVisible, setIsAnswerVisible] = useState(false)
 
   function toggleAnswer() {
     setIsAnswerVisible(!isAnswerVisible)
   }
 
-  function toggleBookmarkedClick(event) {
+  function toggleBookmarkClick(event) {
     event.stopPropagation()
-    toggleBookmarked()
+    if (onBookmarkClicked) {
+      onBookmarkClicked()
+    }
   }
 
   return (
     <CardStyle onClick={toggleAnswer} className="Card">
-      <BookmarkButton active={isBookmarked} onClick={toggleBookmarkedClick} />
+      {onBookmarkClicked && <BookmarkButton active={isBookmarked} onClick={toggleBookmarkClick} />}
       <h2>{title}</h2>
       <p>{question}</p>
       {isAnswerVisible && <Answer text={answer} />}

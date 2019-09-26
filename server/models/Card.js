@@ -6,6 +6,7 @@ const Card = mongoose.model('Card', {
   answer: String,
   isBookmarked: Boolean,
   doPractice: Boolean,
+  tags: [String],
 })
 
 module.exports = Card

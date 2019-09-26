@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 
 import BookmarkButton from './BookmarkButton'
+import Tag from './Tag'
 import PropTypes from 'prop-types'
 
 Card.propTypes = {
@@ -10,15 +11,17 @@ Card.propTypes = {
   answer: PropTypes.string.isRequired,
   isBookmarked: PropTypes.bool,
   onBookmarkClicked: PropTypes.func,
+  tags: PropTypes.array,
 }
 
 Card.defaultProps = {
   title: '(No title)',
   question: '(No question)',
   answer: '(No answer)',
+  tags: []
 }
 
-export default function Card({ title, question, answer, isBookmarked, onBookmarkClicked }) {
+export default function Card({ title, question, answer, isBookmarked, onBookmarkClicked, tags }) {
   const [isAnswerVisible, setIsAnswerVisible] = useState(false)
 
   function toggleAnswer() {
@@ -38,6 +41,7 @@ export default function Card({ title, question, answer, isBookmarked, onBookmark
       <h2>{title}</h2>
       <p>{question}</p>
       {isAnswerVisible && <Answer text={answer} />}
+      {tags.map((tag, index) => <Tag text={tag} key={index}/>)}
     </CardStyle>
   )
 

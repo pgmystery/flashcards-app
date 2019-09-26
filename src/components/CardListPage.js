@@ -14,6 +14,7 @@ export default function CardListPage({ cards, title, toggleBookmarked }) {
           answer={card.answer}
           onBookmarkClicked={() => toggleBookmarked(card)}
           isBookmarked={card.isBookmarked}
+          tags={card.tags}
         />
       ))}
     </>

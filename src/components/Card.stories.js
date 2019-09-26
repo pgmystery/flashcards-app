@@ -1,5 +1,5 @@
 import React from 'react';
-import { withKnobs, text, boolean } from '@storybook/addon-knobs';
+import { withKnobs, text, boolean, array } from '@storybook/addon-knobs';
 import { withInfo } from '@storybook/addon-info';
 import Card from './Card';
 
@@ -11,6 +11,13 @@ export default {
 function Wrapper(storyFn) {
   return <div style={{width: '600px', margin: 'auto'}}>{storyFn()}</div>
 }
+
+export const standard = () =>
+ <Card
+  title={text('title', 'Title')}
+  question={text('question', 'Question')}
+  answer={text('answer', 'Answer')}
+/>
 
 export const notBookmarked = () => 
 <Card
@@ -30,9 +37,14 @@ export const bookmarked = () =>
   isBookmarked={boolean('isBookmarked', true)}
 />
 
-export const withoutBookmark = () =>
+export const withTags = () =>
  <Card
   title={text('title', 'Title')}
   question={text('question', 'Question')}
   answer={text('answer', 'Answer')}
+  tags={array('tags', ['tag1', 'tag2'])}
 />
+
+standard.story = {
+  name: 'Default'
+}

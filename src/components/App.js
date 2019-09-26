@@ -31,9 +31,9 @@ export default function App() {
       <AppStyle>
         <Page>
           <Route exact path="/" render={HomePage} />
-          <Route exact path="/practice" render={PracticePage} />
-          <Route exact path="/bookmarks" render={BookmarksPage} />
-          <Route exact path="/settings" render={() => <SettingsPage onSubmit={createCard} />} />
+          <Route path="/practice" render={PracticePage} />
+          <Route path="/bookmarks" render={BookmarksPage} />
+          <Route path="/settings" render={() => <SettingsPage onSubmit={createCard} />} />
         </Page>
         <Navigation
           rootText={'Home'}

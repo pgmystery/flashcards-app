@@ -30,10 +30,10 @@ export default function App() {
       <Router>
       <AppStyle>
         <Page>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/practice" component={PracticePage} />
-          <Route exact path="/bookmarks" component={BookmarksPage} />
-          <Route exact path="/settings" component={() => <SettingsPage onSubmit={createCard} />} />
+          <Route exact path="/" render={HomePage} />
+          <Route exact path="/practice" render={PracticePage} />
+          <Route exact path="/bookmarks" render={BookmarksPage} />
+          <Route exact path="/settings" render={() => <SettingsPage onSubmit={createCard} />} />
         </Page>
         <Navigation
           rootText={'Home'}
